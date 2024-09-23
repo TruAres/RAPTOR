@@ -25,7 +25,7 @@ int main(int argc, char* argv[]) {
     model.friction.setZero();
 
     // the robot start from this initial condition:
-    Eigen::VectorXd q0(NUM_INDEPENDENT_JOINTS);
+    Eigen::VectorXd q0(NUM_INDEPENDENT_JOINTS); // x stands for dynamic size and d stands for double -> a dynamic sized vector of type double
     q0 << 0, 0, -0.411354,  0.859395, -0.448041, -0.001708,
           0, 0, -0.411354,  0.859395, -0.448041, -0.001708;
     Eigen::VectorXd q_d0(NUM_INDEPENDENT_JOINTS);
