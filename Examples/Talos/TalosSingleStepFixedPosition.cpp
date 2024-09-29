@@ -20,7 +20,7 @@ int main(int argc, char* argv[]) {
     pinocchio::urdf::buildModel(urdf_filename, model);
     
     // ignore all motor dynamics
-    model.rotorInertia.setZero();
+    model.rotorInertia.setZero();   
     model.damping.setZero();
     model.friction.setZero();
 
@@ -29,7 +29,7 @@ int main(int argc, char* argv[]) {
     q0 << 0, 0, -0.411354,  0.859395, -0.448041, -0.001708,
           0, 0, -0.411354,  0.859395, -0.448041, -0.001708;
     Eigen::VectorXd q_d0(NUM_INDEPENDENT_JOINTS);
-    q_d0.setZero();
+    q_d0.setZero(); 
 
     // load settings
     YAML::Node config;
@@ -155,7 +155,7 @@ int main(int argc, char* argv[]) {
 
         std::cout << "Data needed for comparison: " << mynlp->obj_value_copy << ' ' << mynlp->final_constr_violation << ' ' << solve_time << std::endl;
         // experiment_output << mynlp->obj_value_copy << ' ' << mynlp->final_constr_violation << ' ' << solve_time << std::endl;
-    }
+    }  
     catch (std::exception& e) {
         std::cerr << e.what() << std::endl;
         throw std::runtime_error("Error solving optimization problem! Check previous error message!");
@@ -208,7 +208,7 @@ int main(int argc, char* argv[]) {
                     solution << testnlp->cidPtr_->tau(j)(i) << ' ';
                 }
                 solution << std::endl;
-            }
+            }   
         }
         catch (std::exception& e) {
             std::cerr << e.what() << std::endl;

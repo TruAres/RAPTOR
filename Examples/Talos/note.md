@@ -22,6 +22,22 @@ DenseBase<Derived>::Zero(Index size)
 ```
 creates a vector (or matrix) where each element is initialized to the constant value 0 
 
+```
+mynlp->set_parameters(z,
+                              T,
+                              N,
+                              time_discretizati,
+                              degree,
+                              model,
+                              gp,
+                              'L',
+                              Transform(),
+                              false,
+                              q0,
+                              q_d0);
+
+```
+initialize the values of parameters in the optimizer
 # Question
 ```
 typedef struct GaitParameters_ {
@@ -39,3 +55,8 @@ how to get the initial values of the parameters?
 Eigen::VectorXd z = Eigen::VectorXd::Zero((degree - 1) * NUM_INDEPENDENT_JOINTS + NUM_JOINTS + NUM_DEPENDENT_JOINTS);
 ```
 Does it mean the size of the vector needed to represent the trajectory?
+
+```
+    const std::string urdf_filename = "../Robots/talos/talos_reduced_armfixed_floatingbase.urdf";
+```
+?
