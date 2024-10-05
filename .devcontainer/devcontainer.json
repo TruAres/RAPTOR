@@ -10,7 +10,19 @@
 	},
 	"features": {
 		"ghcr.io/wxw-matt/devcontainer-features/command_runner:0": {}
-	}
+	},
+	"runArgs": [
+        "--gpus",
+        "all"
+    ],
+	"mounts": [
+        "source=/tmp/.X11-unix,target=/tmp/.X11-unix,type=bind"
+    ]
+    // "runArgs": [
+    //     "--gpus", "all",
+    //     "-e", "DISPLAY=${env:DISPLAY}",
+    //     "-v", "/tmp/.X11-unix:/tmp/.X11-unix"
+    // ]
 
 	// Features to add to the dev container. More info: https://containers.dev/features.
 	// "features": {},

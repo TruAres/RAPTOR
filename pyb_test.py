@@ -1,27 +1,17 @@
 import pybullet as p
-import pybullet_data
 import time
-
-# 以 GUI 模式连接到 PyBullet
-p.connect(p.GUI)
-
-# 设置额外的搜索路径以找到 URDF 文件
-p.setAdditionalSearchPath(pybullet_data.getDataPath())
-
-# 重置模拟以确保环境干净
-p.resetSimulation()
-
-# 加载地面和机器人 URDF 文件
+import pybullet_data
+physicsClient = p.connect(p.GUI)#or p.DIRECT for non-graphical version
+p.setAdditionalSearchPath(pybullet_data.getDataPath()) #optionally
+p.setGravity(0,0,-10)
 planeId = p.loadURDF("plane.urdf")
-robotId = p.loadURDF("kuka_iiwa/model.urdf", useFixedBase=True)
-
-# 设置重力
-p.setGravity(0, 0, -9.81)
-
-# 运行模拟，执行一定数量的步数
-for i in range(10000):
+startPos = [0,0,1]
+startOrientation = p.getQuaternionFromEuler([0,0,0])
+boxId = p.loadURDF("r2d2.urdf",startPos, startOrientation)
+#set the center of mass frame (loadURDF sets base link frame) startPos/Ornp.resetBasePositionAndOrientation(boxId, startPos, startOrientation)
+for i in range (10000):
     p.stepSimulation()
     time.sleep(1./240.)
-
-# 断开与物理引擎的连接
+cubePos, cubeOrn = p.getBasePositionAndOrientation(boxId)
+print(cubePos,cubeOrn)
 p.disconnect()

@@ -74,6 +74,7 @@ ENV LD_LIBRARY_PATH /usr/lib:/usr/lib/x86_64-linux-gnu:/opt/openrobots/lib:/usr/
 ENV PYTHONPATH /opt/openrobots/lib/python3.10/site-packages
 ENV CMAKE_PREFIX_PATH /usr:/opt/openrobots:/usr/local:/usr/local/include/ompl-1.6
 
+
 # Set the entry point to VSCode's default command
 CMD ["/bin/bash"]
 
