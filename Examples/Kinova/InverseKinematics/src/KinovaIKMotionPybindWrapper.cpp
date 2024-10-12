@@ -11,7 +11,7 @@ KinovaIKMotionPybindWrapper::KinovaIKMotionPybindWrapper(const std::string urdf_
     mynlp = new KinovaIKSolver();
     mynlp->display_info = display_info;
 
-    app = IpoptApplicationFactory();
+    app = IpoptApplicationFactory(); //??
     app->Options()->SetStringValue("hessian_approximation", "exact");
 
     endT = Transform(Vec3(M_PI, 0, 0), Vec3(0, 0, -0.061525));
