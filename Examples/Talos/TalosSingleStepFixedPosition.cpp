@@ -1,5 +1,4 @@
 #include "TalosSingleStepOptimizer.h"
-
 #include "pinocchio/parsers/urdf.hpp"
 #include "pinocchio/algorithm/joint-configuration.hpp"
 

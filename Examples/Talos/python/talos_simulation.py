@@ -4,6 +4,7 @@ import pinocchio as pin
 from scipy.interpolate import interp1d
 from scipy.integrate import solve_ivp
 import scipy.io
+from pathlib import Path
 
 def integrate(model, constraint_model, constraint_data,
               ts_sim, x0, 
@@ -21,7 +22,7 @@ def integrate(model, constraint_model, constraint_data,
     def control(t, x):
         u_openloop = interp1d(ts, us.T, kind=kind)(t)
         
-        xdes = interp1d(ts, xs.T, kind=kind)(t)
+        xdes = interp1d(ts, xs.T, kind=kind)(t) #？
         qdes = act_matrix.T @ xdes[:nq]
         vdes = act_matrix.T @ xdes[nq:]
         
@@ -47,7 +48,7 @@ def integrate(model, constraint_model, constraint_data,
         
         a = pin.constraintDynamics(
             model, data_sim, q, v, tau, constraint_model, constraint_data, prox_settings
-        )
+        ) #？
         
         return np.concatenate([v, a])
     
@@ -77,7 +78,8 @@ def integrate(model, constraint_model, constraint_data,
     return position, velocity, controls, position_errors, velocity_errors
 
 if __name__ == "__main__":
-    urdf_filename = "../../../Robots/talos/talos_reduced_armfixed_floatingbase.urdf"
+    # current_dir = Path(__file__).parent.resolve()
+    urdf_filename =  "../../../Robots/talos/talos_reduced_armfixed_floatingbase.urdf"
     model = pin.buildModelFromUrdf(urdf_filename)
     data = model.createData()
     

@@ -11,6 +11,10 @@ import math
 urdf_filename = "Robots/kinova-gen3/kinova.urdf"
 
 p.connect(p.GUI)
+# p.resetDebugVisualizerCamera(cameraDistance=4,   # 控制相机与目标的距离
+#                              cameraYaw=-45,        # 控制绕着目标点旋转的角度
+#                              cameraPitch=-50,     # 控制相机的俯仰角
+#                              cameraTargetPosition=[0, 0, 0])  # 控制相机对准的目标位置
 robot = p.loadURDF(urdf_filename, useFixedBase=True)
 num_joints = p.getNumJoints(robot)
 
@@ -32,80 +36,80 @@ print(frame_config)
 # set up desired end-effector transforms
 # This motion just moves the end-effector along the x-axis for 20 cm
 # N = 10
-# N = 35
-# step_size = 0.02
-
-# desiredTransforms = np.zeros((N, 12))
-
-# for pid in range(N):
-#     # desiredTranslation = np.array([0.45 + pid * step_size, 0, 0.2])
-#     if pid <=  (2 * N) // 7:
-#         desiredTranslation = np.array([0.45 + pid * step_size, 0, 0.2])
-#     elif pid <= (3 * N) // 7:
-#         desiredTranslation = np.array([0.45 + ((2 * N) // 7) * step_size - (pid - 2 * N // 7) * step_size, 0, 0.2])
-#     elif pid <= (4 * N) // 7:
-#         desiredTranslation = np.array([0.45 + (N // 7) * step_size, 0 - (pid - 3 * N // 7) * step_size, 0.2])
-#     elif pid <= (5 * N) // 7:
-#         desiredTranslation = np.array([0.45 + (N // 7) * step_size + (pid - 4 * N //7) * step_size, 0 - N // 7 * step_size, 0.2])
-#     else:
-#         desiredTranslation = np.array([0.45 + (2 * N // 7) * step_size - (pid - 5 * N //7) * step_size, 0 - N // 7 * step_size, 0.2])
-#     # if pid <=  N // 2:
-#     #     desiredTranslation = np.array([0.45 + pid * step_size, 0, 0.2])
-#     # else:
-#     #     desiredTranslation = np.array([0.45 + (pid - N // 2 ) * step_size, 0.2, 0.2])
-    
-#     desiredRotation = np.array([[1, 0, 0], [0, -1, 0], [0, 0, -1]])
-#     desiredTransforms[pid] = np.concatenate([desiredTranslation, desiredRotation.flatten()])
-
-N = 40
+N = 35
 step_size = 0.02
 
 desiredTransforms = np.zeros((N, 12))
 
-# 将参数 t 分成两部分：左瓣和右瓣
-N_left = N // 2
-N_right = N - N_left
-# 左瓣：从 t = π 到 t = 2π
-t_left = np.linspace(np.pi, 2 * np.pi, N_left, endpoint=False)
-# 右瓣：从 t = 2π 到 t = 3π
-t_right = np.linspace(2 * np.pi, 3 * np.pi, N_right)
-# 合并 t
-t = np.concatenate([t_left, t_right])
-# 爱心的参数方程
-x = 16 * np.sin(t) ** 3
-y = 13 * np.cos(t) - 5 * np.cos(2 * t) - 2 * np.cos(3 * t) - np.cos(4 * t)
-
-# 将 y 移动，使起点 y[0] 为 0
-y_shifted = y - y[0]  # y_shifted[0] = 0
-
-# 缩放 y_shifted 到期望的最大值
-desired_y_max = 0.2  # 调整高度
-y_max_shifted = y_shifted.max()
-y_normalized = y_shifted / y_max_shifted  # 归一化到 [0, 1]
-y_scaled = y_normalized * desired_y_max  # 缩放到 [0, desired_y_max]
-
-# 同样处理 x
-# 将 x 移动，使起点 x[0] 为 0
-x_shifted = x - x[0]  # x_shifted[0] = 0
-# 计算 x_shifted 的最小值和最大值
-x_min_shifted = x_shifted.min()
-x_max_shifted = x_shifted.max()
-# 归一化 x_shifted 到 [-1, 1]
-x_normalized = x_shifted / max(abs(x_min_shifted), x_max_shifted)
-# 缩放 x_normalized 到期望的宽度
-desired_x_range = 0.1  # 爱心的半宽度
-x_scaled = x_normalized * desired_x_range
-
-# 平移 x_scaled，使起点在 x = 0.45
-x_offset = 0.45
-x_scaled = x_scaled + x_offset  # x_scaled[0] = x_offset
-
-# 填充 desiredTransforms
 for pid in range(N):
-    desiredTranslation = np.array([x_scaled[pid], y_scaled[pid], 0.2])
-
+    # desiredTranslation = np.array([0.45 + pid * step_size, 0, 0.2])
+    if pid <=  (2 * N) // 7:
+        desiredTranslation = np.array([0.45 + pid * step_size, 0, 0.2])
+    elif pid <= (3 * N) // 7:
+        desiredTranslation = np.array([0.45 + ((2 * N) // 7) * step_size - (pid - 2 * N // 7) * step_size, 0, 0.2])
+    elif pid <= (4 * N) // 7:
+        desiredTranslation = np.array([0.45 + (N // 7) * step_size, 0 - (pid - 3 * N // 7) * step_size, 0.2])
+    elif pid <= (5 * N) // 7:
+        desiredTranslation = np.array([0.45 + (N // 7) * step_size + (pid - 4 * N //7) * step_size, 0 - N // 7 * step_size, 0.2])
+    else:
+        desiredTranslation = np.array([0.45 + (2 * N // 7) * step_size - (pid - 5 * N //7) * step_size, 0 - N // 7 * step_size, 0.2])
+    # if pid <=  N // 2:
+    #     desiredTranslation = np.array([0.45 + pid * step_size, 0, 0.2])
+    # else:
+    #     desiredTranslation = np.array([0.45 + (pid - N // 2 ) * step_size, 0.2, 0.2])
+    
     desiredRotation = np.array([[1, 0, 0], [0, -1, 0], [0, 0, -1]])
     desiredTransforms[pid] = np.concatenate([desiredTranslation, desiredRotation.flatten()])
+
+# N = 40
+# step_size = 0.02
+
+# desiredTransforms = np.zeros((N, 12))
+
+# # 将参数 t 分成两部分：左瓣和右瓣
+# N_left = N // 2
+# N_right = N - N_left
+# # 左瓣：从 t = π 到 t = 2π
+# t_left = np.linspace(np.pi, 2 * np.pi, N_left, endpoint=False)
+# # 右瓣：从 t = 2π 到 t = 3π
+# t_right = np.linspace(2 * np.pi, 3 * np.pi, N_right)
+# # 合并 t
+# t = np.concatenate([t_left, t_right])
+# # 爱心的参数方程
+# x = 16 * np.sin(t) ** 3
+# y = 13 * np.cos(t) - 5 * np.cos(2 * t) - 2 * np.cos(3 * t) - np.cos(4 * t)
+
+# # 将 y 移动，使起点 y[0] 为 0
+# y_shifted = y - y[0]  # y_shifted[0] = 0
+
+# # 缩放 y_shifted 到期望的最大值
+# desired_y_max = 0.2  # 调整高度
+# y_max_shifted = y_shifted.max()
+# y_normalized = y_shifted / y_max_shifted  # 归一化到 [0, 1]
+# y_scaled = y_normalized * desired_y_max  # 缩放到 [0, desired_y_max]
+
+# # 同样处理 x
+# # 将 x 移动，使起点 x[0] 为 0
+# x_shifted = x - x[0]  # x_shifted[0] = 0
+# # 计算 x_shifted 的最小值和最大值
+# x_min_shifted = x_shifted.min()
+# x_max_shifted = x_shifted.max()
+# # 归一化 x_shifted 到 [-1, 1]
+# x_normalized = x_shifted / max(abs(x_min_shifted), x_max_shifted)
+# # 缩放 x_normalized 到期望的宽度
+# desired_x_range = 0.15  # 爱心的半宽度
+# x_scaled = x_normalized * desired_x_range
+
+# # # 平移 x_scaled，使起点在 x = 0.45
+# x_offset = 0.45
+# x_scaled = x_scaled + x_offset  # x_scaled[0] = x_offset
+
+# # 填充 desiredTransforms
+# for pid in range(N):
+#     desiredTranslation = np.array([x_scaled[pid], y_scaled[pid], 0.2])
+
+#     desiredRotation = np.array([[1, 0, 0], [0, -1, 0], [0, 0, -1]])
+#     desiredTransforms[pid] = np.concatenate([desiredTranslation, desiredRotation.flatten()])
 
 
 # ipopt settings

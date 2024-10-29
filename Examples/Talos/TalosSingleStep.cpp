@@ -79,14 +79,6 @@ int main(int argc, char* argv[]) {
     SmartPtr<IpoptApplication> app = IpoptApplicationFactory();
 
     try {
-        app->Options()->SetNumericValue("tol", config["tol"].as<double>());
-        app->Options()->SetNumericValue("constr_viol_tol", mynlp->constr_viol_tol);
-        app->Options()->SetNumericValue("max_wall_time", config["max_wall_time"].as<double>());
-        app->Options()->SetIntegerValue("max_iter", config["max_iter"].as<int>());
-        app->Options()->SetNumericValue("obj_scaling_factor", config["obj_scaling_factor"].as<double>());
-        app->Options()->SetIntegerValue("print_level", config["print_level"].as<double>());
-        app->Options()->SetStringValue("mu_strategy", config["mu_strategy"].as<std::string>().c_str());
-        app->Options()->SetStringValue("linear_solver", config["linear_solver"].as<std::string>().c_str());
         app->Options()->SetStringValue("ma57_automatic_scaling", "yes");
 
         if (mynlp->enable_hessian) {
