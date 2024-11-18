@@ -202,7 +202,7 @@ for tid in range(0, data.shape[1]):
     base_xyz = data[0:3, tid]
     base_rpy = data[3:6, tid]
     base_quat = p.getQuaternionFromEuler(base_rpy)
-    pos = data[6:18, tid]
+    pos = data[6:19, tid]
     
     # 重置机器人的姿态
     p.resetBasePositionAndOrientation(robot, base_xyz, base_quat)
@@ -267,7 +267,7 @@ for tid in range(0, data.shape[1]):
     base_xyz = data[0:3, tid]
     base_rpy = data[3:6, tid]
     base_quat = p.getQuaternionFromEuler(base_rpy)
-    pos = data[6:18, tid]
+    pos = data[6:19, tid]
     
     # 重置机器人的姿态
     p.resetBasePositionAndOrientation(robot, base_xyz, base_quat)

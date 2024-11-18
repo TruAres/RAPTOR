@@ -32,7 +32,8 @@ const std::string independentJointNames[NUM_INDEPENDENT_JOINTS] = {
     "leg_right_3_joint",
     "leg_right_4_joint",
     "leg_right_5_joint",
-    "leg_right_6_joint"
+    "leg_right_6_joint",
+    "wrist_right_ft_joint"
 };
 
 class TalosDynamicsConstraints : public DynamicsConstraints {

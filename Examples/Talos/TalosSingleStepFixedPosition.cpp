@@ -27,7 +27,7 @@ int main(int argc, char* argv[]) {
     // the robot start from this initial condition:
     Eigen::VectorXd q0(NUM_INDEPENDENT_JOINTS);
     q0 << 0, 0, -0.411354,  0.859395, -0.448041, -0.001708,
-          0, 0, -0.411354,  0.859395, -0.448041, -0.001708;
+          0, 0, -0.411354,  0.859395, -0.448041, -0.001708, -0.411354;
     Eigen::VectorXd q_d0(NUM_INDEPENDENT_JOINTS);
     q_d0.setZero();
 
@@ -89,8 +89,8 @@ int main(int argc, char* argv[]) {
         throw std::runtime_error("Error initializing Ipopt class! Check previous error message!");
     }
 
-    SmartPtr<IpoptApplication> app = IpoptApplicationFactory();
 
+    SmartPtr<IpoptApplication> app = IpoptApplicationFactory();
     try {
         app->Options()->SetNumericValue("tol", config["tol"].as<double>());
         app->Options()->SetNumericValue("constr_viol_tol", mynlp->constr_viol_tol);
@@ -133,12 +133,14 @@ int main(int argc, char* argv[]) {
         app->Options()->SetNumericValue("derivative_test_tol", 1e-4);
     }
 
+
     // Initialize the IpoptApplication and process the options
     ApplicationReturnStatus status;
     status = app->Initialize();
     if( status != Solve_Succeeded ) {
 		throw std::runtime_error("Error during initialization of optimization!");
     }
+
 
     // char numBuffer[10];
     // sprintf(numBuffer, "%.1f", gp.swingfoot_end_x_des);
@@ -148,7 +150,7 @@ int main(int argc, char* argv[]) {
         auto start = std::chrono::high_resolution_clock::now();
 
         // Ask Ipopt to solve the problem
-        status = app->OptimizeTNLP(mynlp);
+        status = app->OptimizeTNLP(mynlp); 
 
         auto end = std::chrono::high_resolution_clock::now();
         double solve_time = std::chrono::duration_cast<std::chrono::microseconds>(end - start).count() / 1e6;
