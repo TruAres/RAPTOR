@@ -848,10 +848,10 @@
       </geometry>
     </collision>
   </link>
-  <joint name="arm_right_1_joint" type="fixed">
+  <joint name="arm_right_1_joint" type="revolute">
     <parent link="torso_2_link"/>
     <child link="arm_right_1_link"/>
-    <origin rpy="0.0 0.0 0.0" xyz="0.00000 -0.1575 0.23200"/>
+    <origin rpy="0.0 -1.57 0.0" xyz="0.00000 -0.1575 0.23200"/>
     <axis xyz="0 0 1"/>
     <limit effort="44.64" lower="-0.523598775598" upper="1.57079632679" velocity="2.7"/>
     <dynamics damping="1.0" friction="1.0"/>
@@ -950,7 +950,7 @@
   <joint name="arm_right_4_joint" type="fixed">
     <parent link="arm_right_3_link"/>
     <child link="arm_right_4_link"/>
-    <origin rpy="0.0 0.0 0.0" xyz="0.02000 0.00000 -0.27300"/>
+    <origin rpy="0.0 -1.57 0.0" xyz="0.02000 0.00000 -0.27300"/>
     <axis xyz="0 1 0"/>
     <limit effort="17.86" lower="-2.35619449019" upper="0.0" velocity="4.58"/>
     <dynamics damping="1.0" friction="1.0"/>
@@ -1020,7 +1020,9 @@
   <joint name="arm_right_5_joint" type="fixed">
     <parent link="arm_right_4_link"/>
     <child link="arm_right_5_link"/>
+    <!-- <origin rpy="0.0 0.0 0.0" xyz="-0.02000 0.00000 -0.26430"/> -->
     <origin rpy="0.0 0.0 0.0" xyz="-0.02000 0.00000 -0.26430"/>
+
     <axis xyz="0 0 1"/>
     <limit effort="3" lower="-2.53072741539" upper="2.53072741539" velocity="1.95"/>
     <dynamics damping="1.0" friction="1.0"/>
@@ -1052,7 +1054,7 @@
   <joint name="arm_right_6_joint" type="fixed">
     <parent link="arm_right_5_link"/>
     <child link="arm_right_6_link"/>
-    <origin rpy="0.0 0.0 0.0" xyz="0.00000 0.00000 0.00000"/>
+    <origin rpy="0.0 0.0 0.0" xyz="0.00000 0.00000 0.0"/>
     <axis xyz="1 0 0"/>
     <limit effort="6.6" lower="-1.3962634016" upper="1.3962634016" velocity="1.76"/>
     <dynamics damping="1.0" friction="1.0"/>
@@ -1084,7 +1086,7 @@
   <joint name="arm_right_7_joint" type="fixed">
     <parent link="arm_right_6_link"/>
     <child link="arm_right_7_link"/>
-    <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.0"/>
+    <origin rpy="0.0 -1.57 0.0" xyz="0.0 0.0 0.0"/>
     <axis xyz="0 1 0"/>
     <limit effort="6.6" lower="-0.698131700798" upper="0.698131700798" velocity="1.76"/>
     <dynamics damping="1.0" friction="1.0"/>
@@ -1215,12 +1217,10 @@
       </geometry>
     </collision>
   </link>
-  <joint name="wrist_right_ft_joint" type="revolute">
+  <joint name="wrist_right_ft_joint" type="fixed">
     <parent link="arm_right_7_link"/>
     <child link="wrist_right_ft_link"/>
     <origin rpy="0.0 0 -1.57079632679" xyz="0 0 -0.051"/>
-    <limit lower="-1.57" upper="1.57" effort="10.0" velocity="1.0"/>
-    <axis xyz="0 0 1"/> <!-- 添加 axis 定义 -->
   </joint>
   <!--***********************-->
   <!--       FT TOOL         -->

@@ -30,7 +30,7 @@ constexpr double JOINT_LIMITS_LOWER[NUM_JOINTS] = {
     0,               // leg_right_4_joint   
     -1.309,          // leg_right_5_joint
     -0.5236,          // leg_right_6_joint
-    -1.57
+    -2.2
 
 };
 
@@ -54,7 +54,7 @@ constexpr double JOINT_LIMITS_UPPER[NUM_JOINTS] = {
     2.618,          // leg_right_4_joint
     0.768,          // leg_right_5_joint
     0.5236,          // leg_right_6_joint
-    1.57
+    2.2
 };
 
 constexpr double TORQUE_LIMITS_LOWER[NUM_INDEPENDENT_JOINTS] = {
@@ -70,7 +70,7 @@ constexpr double TORQUE_LIMITS_LOWER[NUM_INDEPENDENT_JOINTS] = {
     -300, // leg_right_4_joint
     -160, // leg_right_5_joint
     -100,  // leg_right_6_joint
-    -160
+    -300
 };
 
 constexpr double TORQUE_LIMITS_UPPER[NUM_INDEPENDENT_JOINTS] = {
@@ -86,7 +86,7 @@ constexpr double TORQUE_LIMITS_UPPER[NUM_INDEPENDENT_JOINTS] = {
     300, // leg_right_4_joint
     160, // leg_right_5_joint
     100,  // leg_right_6_joint
-    160
+    300
 };
 
 constexpr double MU = 0.7;
