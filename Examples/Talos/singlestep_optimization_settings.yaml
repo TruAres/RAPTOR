@@ -12,13 +12,13 @@ degree: 5
 
 ### Gait behavior settings
   # step height (in the middle of the gait)
-swingfoot_midstep_z_des: 0.1
+swingfoot_midstep_z_des: 0.3
 
   # position with respect to the forward direction of the robot at the beginning
 swingfoot_begin_x_des: -0.0
 
   # position with respect to the forward direction of the robot at the end
-swingfoot_end_x_des: 0.8
+swingfoot_end_x_des: 0.4
 
   # examples:
   # 1. swingfoot_begin_x_des/swingfoot_end_x_des being positive 

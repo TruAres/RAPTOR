@@ -190,7 +190,8 @@ void TalosCustomizedConstraints::compute_bounds() {
     //     roll and pitch always close to 0
     //     yaw always close to 0 when walking forward
     g6_lb = VecX::Constant(trajPtr_->N, 0.95);
-    g6_ub = VecX::Constant(trajPtr_->N, 1e19);
+    // g6_ub = VecX::Constant(trajPtr_->N, 1e19);
+    g6_ub = VecX::Constant(trajPtr_->N, 1.1);
     g7_lb = VecX::Constant(trajPtr_->N, -gp.eps_torso_angle);
     g7_ub = VecX::Constant(trajPtr_->N, gp.eps_torso_angle);
     g8_lb = VecX::Constant(trajPtr_->N, -gp.eps_torso_angle);

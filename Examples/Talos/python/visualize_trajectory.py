@@ -149,7 +149,7 @@ timeStep = 0.005
 
 ### read data
 # data = np.loadtxt("../data/trajectory-talos-simulation.txt")
-data = np.loadtxt("../data/trajectory-talos0.8.txt")
+data = np.loadtxt("../data/trajectory-talos0.4.txt")
 
 ### connect to simulator
 p.connect(p.GUI)
