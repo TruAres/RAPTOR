@@ -848,10 +848,10 @@
       </geometry>
     </collision>
   </link>
-  <joint name="arm_right_1_joint" type="fixed">
+  <joint name="arm_right_1_joint" type="revolute">
     <parent link="torso_2_link"/>
     <child link="arm_right_1_link"/>
-    <origin rpy="0.0 0.0 0.0" xyz="0.00000 -0.1575 0.23200"/>
+    <origin rpy="0.0 -1.57 0.0" xyz="0.00000 -0.1575 0.23200"/>
     <axis xyz="0 0 1"/>
     <limit effort="44.64" lower="-0.523598775598" upper="1.57079632679" velocity="2.7"/>
     <dynamics damping="1.0" friction="1.0"/>
