@@ -28,8 +28,8 @@ target_link_libraries(Taloslib PUBLIC
 )
 
 add_executable(Talos_example 
-    # TalosSingleStep.cpp)
-    TalosSingleStepFixedPosition.cpp)
+    TalosSingleStep.cpp)
+    # TalosSingleStepFixedPosition.cpp)
     # VisualizationHelper.cpp)
 
 target_link_libraries(Talos_example PUBLIC
