@@ -27,7 +27,7 @@ int main(int argc, char* argv[]) {
     // the robot start from this initial condition:
     Eigen::VectorXd q0(NUM_INDEPENDENT_JOINTS);
     q0 << 0, 0, -0.411354,  0.859395, -0.448041, -0.001708,
-          0, 0, -0.411354,  0.859395, -0.448041, -0.001708, 0;
+          0, 0, -0.411354,  0.859395, -0.448041, -0.001708, 0.100000;
     Eigen::VectorXd q_d0(NUM_INDEPENDENT_JOINTS);
     q_d0.setZero();
 
@@ -37,7 +37,7 @@ int main(int argc, char* argv[]) {
     const double T = 0.8;
     TimeDiscretization time_discretization = Uniform;
     int N = 14;
-    int degree = 5;
+    int degree = 6;
     
     GaitParameters gp;
 

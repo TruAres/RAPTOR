@@ -123,7 +123,7 @@ if __name__ == "__main__":
     T_ss = 0.8
         
     # load results from RAPTOR
-    step_length = 0.8
+    step_length = 0.4
     trajectories = np.loadtxt('../data/solution-talos-forward-' + str(step_length) + '.txt')
 
     ts_raptor = np.linspace(0, T_ss, len(trajectories))
