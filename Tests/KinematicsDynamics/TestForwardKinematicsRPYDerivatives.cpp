@@ -1,3 +1,6 @@
+#define BOOST_TEST_MODULE FKGradientCheckerTest
+#include <boost/test/included/unit_test.hpp>
+
 #include "Optimizer.h"
 #include "ForwardKinematics.h"
 
@@ -66,13 +69,6 @@ public:
         }
 
         VecX z = Utils::initializeEigenVectorFromArray(x, n);
-
-        // fkPtr_->compute(0, model.nq, z);
-        // Vec3 rpy = fkPtr_->getRPY();
-
-        // obj_value = roll_weight * rpy(0) + 
-        //             pitch_weight * rpy(1) + 
-        //             yaw_weight * rpy(2);
 
         fkPtr_->compute(0, model.nq, z, nullptr, nullptr, 1);
         MatX Jrpy = fkPtr_->getRPYJacobian();
@@ -173,7 +169,24 @@ public:
     const double yaw_weight = 1.0;
 };
 
-int main() {
+// extract words from out file 
+bool check_gradient_output(const std::string& filename, const std::string& keyword) {
+    std::ifstream file(filename);
+    if (!file.is_open()) {
+        BOOST_TEST_MESSAGE("Can not open file " + filename);
+        return false;
+    }
+    std::string line;
+    while (std::getline(file, line)) {
+        if (line.find(keyword) != std::string::npos) {
+            return true;
+        }
+    }
+    return false;
+}
+
+BOOST_AUTO_TEST_SUITE(FKGradientCheckerSuite)
+BOOST_AUTO_TEST_CASE(test_FKGradientChecker){  
     // Define robot model
     const std::string urdf_filename = "../Robots/kinova-gen3/kinova.urdf";
     
@@ -184,40 +197,46 @@ int main() {
 
     // Initialize gradient checker
     SmartPtr<FKGradientChecker> mynlp = new FKGradientChecker();
+
     try {
-	    mynlp->set_parameters(z0,
-                              model);
-    }
-    catch (std::exception& e) {
+        mynlp->set_parameters(z0, model);
+    } catch (const std::exception& e) {
         std::cerr << e.what() << std::endl;
-        throw std::runtime_error("Error initializing Ipopt class! Check previous error message!");
+        BOOST_FAIL("Error initializing Ipopt class! Check previous error message!");  
     }
 
     SmartPtr<IpoptApplication> app = IpoptApplicationFactory();
 
 	app->Options()->SetNumericValue("max_wall_time", 1e-5);
 	app->Options()->SetIntegerValue("print_level", 5);
+    app->Options()->SetStringValue("linear_solver", "ma57");
     app->Options()->SetStringValue("hessian_approximation", "exact");
 
     // For gradient checking
     app->Options()->SetStringValue("output_file", "ipopt.out");
     app->Options()->SetStringValue("derivative_test", "second-order");
-    app->Options()->SetNumericValue("derivative_test_perturbation", 1e-7);
+    app->Options()->SetNumericValue("derivative_test_perturbation", 1e-6);
     app->Options()->SetNumericValue("derivative_test_tol", 1e-5);
 
     // Initialize the IpoptApplication and process the options
     ApplicationReturnStatus status;
     status = app->Initialize();
     if( status != Solve_Succeeded ) {
-		throw std::runtime_error("Error during initialization of optimization!");
+		 BOOST_FAIL("Error during initialization of optimization!");
     }
 
     try {
         status = app->OptimizeTNLP(mynlp);
     }
     catch (std::exception& e) {
-        throw std::runtime_error("Error solving optimization problem! Check previous error message!");
+        BOOST_FAIL("Error solving optimization problem! Check previous error message!");
     }
+    // check the grad
+    bool gradient_check_passed = check_gradient_output("ipopt.out", "No errors detected by derivative checker");
+    BOOST_CHECK_MESSAGE(gradient_check_passed, "Derivative_test not pass");
 
-    return 0;
+    // check the nlp
+    BOOST_CHECK(status == 0 || status == 1);  //success or feasible
 }
+
+BOOST_AUTO_TEST_SUITE_END()
