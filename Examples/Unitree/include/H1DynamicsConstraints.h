@@ -4,7 +4,7 @@
 #include <string>
 #include <vector>
 
-#include "H1Constants.h"
+#include "H1Constraints.h"
 #include "DynamicsConstraints.h"
 #include "ForwardKinematics.h"
 

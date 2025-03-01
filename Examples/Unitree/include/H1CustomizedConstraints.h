@@ -30,7 +30,7 @@ public:
     // Constructor
     H1CustomizedConstraints(const Model& model_input,
                             std::shared_ptr<Trajectories>& trajPtr_input,
-                            std::shared_ptr<G1DynamicsConstraints>& dcPtr_input,
+                            std::shared_ptr<H1DynamicsConstraints>& dcPtr_input,
                             const GaitParameters& gp_input);
 
     // Destructor
