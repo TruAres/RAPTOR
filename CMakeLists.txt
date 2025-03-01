@@ -9,6 +9,15 @@ if(NOT CMAKE_BUILD_TYPE)
     set(CMAKE_BUILD_TYPE Release)
 endif()
 
+include(CTest)
+set(CTEST_OUTPUT_ON_FAILURE TRUE)
+set(CTEST_CUSTOM_TESTS_IGNORE "")
+
+set(CTEST_JUNIT_OUTPUT_PATH "${CMAKE_BINARY_DIR}/TestResults")
+set(CTEST_CUSTOM_TESTS_IGNORE "")
+
+enable_testing()
+
 # set(CMAKE_CXX_FLAGS "-Wall -Wextra")
 set(CMAKE_CXX_FLAGS_DEBUG "-g -fopenmp")
 set(CMAKE_CXX_FLAGS_RELEASE "-O3 -fopenmp")
@@ -76,11 +85,11 @@ include_directories(${OMPL_INCLUDE_DIRS})
 link_directories(${OMPL_LIBRARY_DIRS})
 
 set(PINOCCHIO_FLAGS
-  ${pinocchio_CFLAGS_OTHER}
-  -Wno-ignored-attributes
-  -Wno-invalid-partial-specialization    # to silence warning with unsupported Eigen Tensor
-  -DPINOCCHIO_URDFDOM_TYPEDEF_SHARED_PTR
-  -DPINOCCHIO_URDFDOM_USE_STD_SHARED_PTR
+    ${pinocchio_CFLAGS_OTHER}
+    -Wno-ignored-attributes
+    -Wno-invalid-partial-specialization    # to silence warning with unsupported Eigen Tensor
+    -DPINOCCHIO_URDFDOM_TYPEDEF_SHARED_PTR
+    -DPINOCCHIO_URDFDOM_USE_STD_SHARED_PTR
 )
 # Find YAML library
 find_package(yaml-cpp REQUIRED)
@@ -106,15 +115,23 @@ link_directories(${HSL_LIBRARY_DIR})
 # link_directories(${PARDISO_LIBRARY_DIR})
 # include_directories(Utils/include)
 
-add_subdirectory(Constraints)
+# Find MOSEK library
+# set(MOSEK_INCLUDE_DIR /opt/mosek/10.2/tools/platform/linux64x86/h)
+# set(MOSEK_LIBRARY_DIR /opt/mosek/10.2/tools/platform/linux64x86/bin)
+# include_directories(${MOSEK_INCLUDE_DIR})
+# link_directories(${MOSEK_LIBRARY_DIR})
+
+add_subdirectory(Trajectories)
 add_subdirectory(KinematicsDynamics)
 add_subdirectory(Optimization)
-add_subdirectory(Trajectories)
+add_subdirectory(Costs)
+add_subdirectory(Constraints)
 add_subdirectory(Examples)
 add_subdirectory(Tests)
 
 # include
 include_directories(
+    ${PROJECT_SOURCE_DIR}/Costs/include
     ${PROJECT_SOURCE_DIR}/Constraints/include
     ${PROJECT_SOURCE_DIR}/KinematicsDynamics/include
     ${PROJECT_SOURCE_DIR}/Optimization/include
@@ -126,6 +143,7 @@ include_directories(
 install(TARGETS 
     trajlib
     IDlib
+    Costslib
     Conslib
     Optlib
     Kinovalib
