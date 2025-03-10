@@ -4,7 +4,6 @@ import pinocchio as pin
 from scipy.interpolate import interp1d
 from scipy.integrate import solve_ivp
 import scipy.io
-from pathlib import Path
 
 def integrate(model, constraint_model, constraint_data,
               ts_sim, x0, 
@@ -22,7 +21,7 @@ def integrate(model, constraint_model, constraint_data,
     def control(t, x):
         u_openloop = interp1d(ts, us.T, kind=kind)(t)
         
-        xdes = interp1d(ts, xs.T, kind=kind)(t) #？
+        xdes = interp1d(ts, xs.T, kind=kind)(t)
         qdes = act_matrix.T @ xdes[:nq]
         vdes = act_matrix.T @ xdes[nq:]
         
@@ -48,7 +47,7 @@ def integrate(model, constraint_model, constraint_data,
         
         a = pin.constraintDynamics(
             model, data_sim, q, v, tau, constraint_model, constraint_data, prox_settings
-        ) #？
+        )
         
         return np.concatenate([v, a])
     
@@ -78,8 +77,8 @@ def integrate(model, constraint_model, constraint_data,
     return position, velocity, controls, position_errors, velocity_errors
 
 if __name__ == "__main__":
-    # current_dir = Path(__file__).parent.resolve()
-    urdf_filename =  "../../../Robots/talos/talos_reduced_armfixed_floatingbase.urdf"
+    urdf_filename = "../../../Robots/Unitree/h1_2_12dof_floatingbase.urdf"
+    
     model = pin.buildModelFromUrdf(urdf_filename)
     data = model.createData()
     
@@ -88,7 +87,7 @@ if __name__ == "__main__":
     nu = nv - 6
     
     FOOT_FRAME_IDS = {
-        fname: model.getFrameId(fname) for fname in ["left_sole_link", "right_sole_link"]
+        fname: model.getFrameId(fname) for fname in ["left_ankle_roll_joint", "right_ankle_roll_joint"]
     }
     FOOT_JOINT_IDS = {
         fname: model.frames[fid].parentJoint for fname, fid in FOOT_FRAME_IDS.items()
@@ -123,8 +122,8 @@ if __name__ == "__main__":
     T_ss = 0.8
         
     # load results from RAPTOR
-    step_length = 0.8
-    trajectories = np.loadtxt('../data/solution-talos-forward-' + str(step_length) + '.txt')
+    step_length = 0.15
+    trajectories = np.loadtxt('../data/full-trajectory-h1-forward-' + str(step_length) + '.txt')
 
     ts_raptor = np.linspace(0, T_ss, len(trajectories))
     xs_raptor = np.zeros((len(ts_raptor), nq + nv)) 
@@ -176,9 +175,9 @@ if __name__ == "__main__":
     step_length_sim = RF_placement.translation[0]
     print(step_length_opt, step_length_sim)
     
-    np.savetxt('../data/trajectory-talos-simulation.txt', pos_sim.T)
+    np.savetxt('../data/trajectory-h1-simulation.txt', pos_sim.T)
     
-    scipy.io.savemat('../data/talos-simulation-' + str(step_length) + '.mat', 
+    scipy.io.savemat('../data/h1-simulation-' + str(step_length) + '.mat', 
                      {'ts_sim': ts_sim, 
                       'pos_sim': pos_sim, 
                       'vel_sim': vel_sim, 

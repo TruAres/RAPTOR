@@ -1,4 +1,4 @@
-#include "TalosSingleStepOptimizer.h"
+#include "H1SingleStepOptimizer.h"
 
 #include "pinocchio/algorithm/model.hpp"
 #include "pinocchio/parsers/urdf.hpp"
@@ -8,7 +8,7 @@
 #include <iomanip>
 
 using namespace RAPTOR;
-using namespace Talos;
+using namespace H1;
 using namespace Ipopt;
 
 const std::string filepath = "../Examples/Unitree/data/";
@@ -51,7 +51,7 @@ int main(int argc, char* argv[]) {
         std::cerr << "Error parsing YAML file: " << e.what() << std::endl;
     }
     
-    // Eigen::VectorXd z = Utils::initializeEigenMatrixFromFile(filepath + "initial-talos.txt");
+    // Eigen::VectorXd z = Utils::initializeEigenMatrixFromFile(filepath + "initial-h1.txt");
     if (argc > 1) {
         char* end = nullptr;
         std::srand((unsigned int)std::strtoul(argv[1], &end, 10));
@@ -61,7 +61,7 @@ int main(int argc, char* argv[]) {
     }
     Eigen::VectorXd z = 0.1 * Eigen::VectorXd::Random((degree + 1) * NUM_INDEPENDENT_JOINTS + NUM_JOINTS + NUM_DEPENDENT_JOINTS);
     
-    SmartPtr<TalosSingleStepOptimizer> mynlp = new TalosSingleStepOptimizer();
+    SmartPtr<H1SingleStepOptimizer> mynlp = new H1SingleStepOptimizer();
     try {
 	    mynlp->set_parameters(z,
                               T,
@@ -142,7 +142,7 @@ int main(int argc, char* argv[]) {
 
     // Print the solution
     if (mynlp->solution.size() == mynlp->numVars) {
-        std::ofstream solution(filepath + "solution-talos-forward.txt");
+        std::ofstream solution(filepath + "solution-h1-forward.txt");
 
         solution << std::setprecision(20);
         for (int i = 0; i < mynlp->numVars; i++) {
@@ -150,7 +150,7 @@ int main(int argc, char* argv[]) {
         }
         solution.close();
 
-        // std::ofstream trajectory(filepath + "trajectory-talos.txt");
+        // std::ofstream trajectory(filepath + "trajectory-h1.txt");
         // trajectory << std::setprecision(20);
         // for (int i = 0; i < NUM_JOINTS; i++) {
         //     for (int j = 0; j < N; j++) {

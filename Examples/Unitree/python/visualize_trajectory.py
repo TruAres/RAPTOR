@@ -8,10 +8,7 @@ import numpy as np
 timeStep = 0.1
 
 ### read data
-# data = np.loadtxt("../data/trajectory-digit-simulation.txt")
-
-data = np.loadtxt("../data/full-trajectories.txt")
-data = data.T
+data = np.loadtxt("../data/trajectory-talos-simulation.txt")
 
 ### connect to simulator
 p.connect(p.GUI)
@@ -19,8 +16,7 @@ p.setAdditionalSearchPath(pd.getDataPath())
 
 # Load a simple plane
 # plane_id = p.loadURDF("plane.urdf")
-urdf_filename = "../../../Robots/digit-v3/digit-v3-armfixedspecific-floatingbase-springfixed.urdf"
-robot = p.loadURDF(urdf_filename, useFixedBase=True)
+robot = p.loadURDF("../../../Robots/talos/talos_reduced_armfixed.urdf", useFixedBase=False)
 
 # Start the simulation
 p.setGravity(0, 0, -9.81)
@@ -30,13 +26,12 @@ num_joints = p.getNumJoints(robot)
 # input("Press Enter to continue...")
 
 for tid in range(0, data.shape[1]):
-    # base_xyz = data[0:3, tid]
-    # base_rpy = data[3:6, tid]
-    # base_quat = p.getQuaternionFromEuler(base_rpy)
-    # pos = data[6:36, tid]
+    base_xyz = data[0:3, tid]
+    base_rpy = data[3:6, tid]
+    base_quat = p.getQuaternionFromEuler(base_rpy)
+    pos = data[6:18, tid]
     
-    # p.resetBasePositionAndOrientation(robot, base_xyz, base_quat)
-    pos = data[:36, tid]
+    p.resetBasePositionAndOrientation(robot, base_xyz, base_quat)
     
     id = 0
     for i in range(num_joints):

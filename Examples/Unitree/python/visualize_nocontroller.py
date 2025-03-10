@@ -11,7 +11,7 @@ timeStep = 0.1
 
 ### read data
 # data = np.loadtxt("../data/trajectory-talos-simulation.txt")
-urdf_filename =  "../../../Robots/talos/talos_reduced_armfixed_floatingbase.urdf"
+urdf_filename =  "../../../Robots/Unitree/h1_2_12dof_floatingbase.urdf"
 model = pin.buildModelFromUrdf(urdf_filename)
 data = model.createData()
 
@@ -21,7 +21,7 @@ nu = nv - 6
 
 
 step_length = 0.4
-trajectories = np.loadtxt('../data/solution-talos-forward-' + str(step_length) + '.txt')
+trajectories = np.loadtxt('../data/full-trajectory-h1-forward-0.15.txt')
 
 ts_raptor = np.linspace(0, 0.8, len(trajectories)) 
 xs_raptor = np.zeros((len(ts_raptor), nq + nv)) 
@@ -61,7 +61,7 @@ p.setAdditionalSearchPath(pd.getDataPath())
 
 # Load a simple plane
 # plane_id = p.loadURDF("plane.urdf")
-robot = p.loadURDF("../../../Robots/talos/talos_reduced_armfixed.urdf", useFixedBase=False)
+robot = p.loadURDF("../../../Robots/Unitree/h1_2_12dof_floatingbase.urdf", useFixedBase=False)
 
 # Start the simulation
 p.setGravity(0, 0, -9.81)
