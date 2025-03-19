@@ -31,11 +31,11 @@ H1DynamicsConstraints::H1DynamicsConstraints(const std::shared_ptr<Model>& model
 
     if (stanceLeg == 'L' || stanceLeg == 'l') {
         contact_joint_id = modelPtr_->getJointId(std::string(LEFT_FOOT_NAME));
-        stance_foot_endT.p << 0.035, 0, -0.03;
+        stance_foot_endT.p << 0.045, 0, -0.04;
     }
     else {
         contact_joint_id = modelPtr_->getJointId(std::string(RIGHT_FOOT_NAME));
-        stance_foot_endT.p << 0.035, 0, -0.03;
+        stance_foot_endT.p << 0.045, 0, -0.04;
     }
 
     stance_foot_T_des = stance_foot_T_des_input;
@@ -53,11 +53,11 @@ void H1DynamicsConstraints::reinitialize() {
     // reinitialize the stance leg end effector transformation matrix
     if (stanceLeg == 'L' || stanceLeg == 'l') {
         contact_joint_id = modelPtr_->getJointId(std::string(LEFT_FOOT_NAME));
-        stance_foot_endT.p << 0.035, 0, -0.03;
+        stance_foot_endT.p << 0.045, 0, -0.04;
     }
     else {
         contact_joint_id = modelPtr_->getJointId(std::string(RIGHT_FOOT_NAME));
-        stance_foot_endT.p << 0.035, 0, -0.03;
+        stance_foot_endT.p << 0.045, 0, -0.04;
     }
 }
 

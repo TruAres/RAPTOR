@@ -1,13 +1,13 @@
-#include "G1MultipleStepOptimizer.h"
+#include "H1MultipleStepOptimizer.h"
 
 using namespace RAPTOR;
-using namespace G1;
+using namespace H1;
 using namespace Ipopt;
 
-const std::string filepath = "../Examples/Unitree-G1/data/";
+const std::string filepath = "../Examples/Unitree/data/";
 
 int main() {
-    const std::string urdf_filename = "../Robots/unitree-g1/g1_12dof_floatingbase.urdf";
+    const std::string urdf_filename = "../Robots/Unitree/h1_2_12dof_floatingbase.urdf";
 
     pinocchio::Model model;
     pinocchio::urdf::buildModel(urdf_filename, model);
@@ -25,19 +25,19 @@ int main() {
     GaitParameters gp;
     
     // const Eigen::VectorXd solution = Utils::initializeEigenMatrixFromFile(filepath + "solution-g1-initial-guess-0.15.txt");
-    const Eigen::VectorXd solution = Utils::initializeEigenMatrixFromFile(filepath + "solution-g1-forward.txt");
+    const Eigen::VectorXd solution = Utils::initializeEigenMatrixFromFile(filepath + "solution-h1-forward.txt");
 
-    std::ofstream trajectories(filepath + "full-trajectory-g1-forward.txt");
+    std::ofstream trajectories(filepath + "full-trajectory-h1-forward.txt");
 
     // setup optimizers
-    std::vector<SmartPtr<G1SingleStepOptimizer>> testnlps;
+    std::vector<SmartPtr<H1SingleStepOptimizer>> testnlps;
     testnlps.reserve(numSteps);
 
     int offset = 0;
     Transform previousStandingFootTransform;
     
     for (int step = 0; step < numSteps; step++) {
-        testnlps.push_back(new G1SingleStepOptimizer());
+        testnlps.push_back(new H1SingleStepOptimizer());
 
         // Eigen::VectorXd z((degree + 1) * NUM_INDEPENDENT_JOINTS + NUM_JOINTS + NUM_DEPENDENT_JOINTS);
         // for (int i = 0; i < z.size(); i++) {
@@ -57,6 +57,7 @@ int main() {
 
         Transform stanceFootTransform(3, -M_PI_2);
         if (step > 0) {
+            // stanceFootTransform = previousStandingFootTransform;
             stanceFootTransform = previousStandingFootTransform;
         }
 
@@ -94,7 +95,7 @@ int main() {
         for (size_t j = 0; j < testnlp->constraintsNameVec_.size(); j++) {
             if (testnlp->constraintsNameVec_[j] == "customized constraints") {
                 const auto& constraintsPtr_ = testnlp->constraintsPtrVec_[j];
-                const auto& customizedConstraintsPtr = dynamic_cast<G1CustomizedConstraints*>(constraintsPtr_.get());
+                const auto& customizedConstraintsPtr = dynamic_cast<H1CustomizedConstraints*>(constraintsPtr_.get());
 
                 swingfoot_xyzrpy = 
                     customizedConstraintsPtr->swingfoot_xyzrpy.col(customizedConstraintsPtr->swingfoot_xyzrpy.cols() - 1);
@@ -106,5 +107,6 @@ int main() {
         previousStandingFootTransform = Transform(
             Eigen::Vector3d(swingfoot_xyzrpy.tail(3)), 
             Eigen::Vector3d(swingfoot_xyzrpy.head(3)));
+
     }
 }

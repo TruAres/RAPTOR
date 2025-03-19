@@ -14,8 +14,8 @@ H1CustomizedConstraints::H1CustomizedConstraints(const Model& model_input,
     fkPtr_ = std::make_unique<ForwardKinematicsSolver>(modelPtr_.get());
 
     // for regular gait optimization
-    leftfoot_endT.p << 0.035, 0, -0.03;
-    rightfoot_endT.p << 0.035, 0, -0.03;
+    leftfoot_endT.p << 0.045, 0, -0.04;
+    rightfoot_endT.p << 0.045, 0, -0.04;
 
     q = MatX::Zero(modelPtr_->nv, trajPtr_->N);
     pq_pz.resize(1, trajPtr_->N);
@@ -32,7 +32,6 @@ void H1CustomizedConstraints::compute(const VecX& z,
     if (compute_hessian) {
         throw std::invalid_argument("H1CustomizedConstraints does not support hessian computation");
     }
-
     trajPtr_->compute(z, compute_derivatives, compute_hessian);
 
     const int fk_order = compute_derivatives ? 1 : 0;

@@ -31,7 +31,7 @@ int main(int argc, char* argv[]) {
     const double T = 0.4;
     TimeDiscretization time_discretization = Uniform;
     int N = 14;
-    int degree = 5;
+    int degree = 6;
     
     GaitParameters gp;
 
@@ -150,32 +150,32 @@ int main(int argc, char* argv[]) {
         }
         solution.close();
 
-        // std::ofstream trajectory(filepath + "trajectory-h1.txt");
-        // trajectory << std::setprecision(20);
-        // for (int i = 0; i < NUM_JOINTS; i++) {
-        //     for (int j = 0; j < N; j++) {
-        //         trajectory << mynlp->cidPtr_->q(j)(i) << ' ';
-        //     }
-        //     trajectory << std::endl;
-        // }
-        // for (int i = 0; i < NUM_JOINTS; i++) {
-        //     for (int j = 0; j < N; j++) {
-        //         trajectory << mynlp->cidPtr_->v(j)(i) << ' ';
-        //     }
-        //     trajectory << std::endl;
-        // }
+        std::ofstream trajectory(filepath + "trajectory-h1.txt");
+        trajectory << std::setprecision(20);
+        for (int i = 0; i < NUM_JOINTS; i++) {
+            for (int j = 0; j < N; j++) {
+                trajectory << mynlp->cidPtr_->q(j)(i) << ' ';
+            }
+            trajectory << std::endl;
+        }
+        for (int i = 0; i < NUM_JOINTS; i++) {
+            for (int j = 0; j < N; j++) {
+                trajectory << mynlp->cidPtr_->v(j)(i) << ' ';
+            }
+            trajectory << std::endl;
+        }
         // for (int i = 0; i < NUM_JOINTS; i++) {
         //     for (int j = 0; j < N; j++) {
         //         trajectory << mynlp->cidPtr_->a(j)(i) << ' ';
         //     }
         //     trajectory << std::endl;
         // }
-        // for (int i = 0; i < NUM_INDEPENDENT_JOINTS; i++) {
-        //     for (int j = 0; j < N; j++) {
-        //         trajectory << mynlp->cidPtr_->tau(j)(i) << ' ';
-        //     }
-        //     trajectory << std::endl;
-        // }
+        for (int i = 0; i < NUM_INDEPENDENT_JOINTS; i++) {
+            for (int j = 0; j < N; j++) {
+                trajectory << mynlp->cidPtr_->tau(j)(i) << ' ';
+            }
+            trajectory << std::endl;
+        }
         // for (int i = 0; i < NUM_DEPENDENT_JOINTS; i++) {
         //     for (int j = 0; j < N; j++) {
         //         trajectory << mynlp->cidPtr_->lambda(j)(i) << ' ';

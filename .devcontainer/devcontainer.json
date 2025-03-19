@@ -17,7 +17,19 @@
     ],
 	"mounts": [
         "source=/tmp/.X11-unix,target=/tmp/.X11-unix,type=bind"
-    ]
+    ],
+	"customizations": {
+		"vscode": {
+			"extensions": [
+				"ms-python.python",
+				"ms-vscode.cpptools",
+				"ms-vscode.cpptools-extension-pack",
+				"twxs.cmake",
+				"mhutchie.git-graph",
+				"smilerobotics.urdf"
+			]
+		}
+    }
     // "runArgs": [
     //     "--gpus", "all",
     //     "-e", "DISPLAY=${env:DISPLAY}",

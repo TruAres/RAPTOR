@@ -104,7 +104,6 @@ bool H1SingleStepOptimizer::set_parameters(
                                                                                              FRICTION_PARAMS));    
         constraintsNameVec_.push_back("reset map constraints");     
     }
-
     // Cost functions
     costsPtrVec_.push_back(std::make_unique<MinimizePower>(trajPtr_, 
                                                            idPtr_));

@@ -173,6 +173,8 @@
       </geometry>
       <material name="dark">
         <color rgba="0.1 0.1 0.1 1"/>
+      <!-- <material name="white">
+        <color rgba="255 255 255 1"/> -->
       </material>
     </visual>
   </link>
@@ -393,7 +395,7 @@
       <geometry>
         <mesh filename="meshes/right_ankle_pitch_link.STL"/>
       </geometry>
-      <material name="dark">
+      <material name="link">
         <color rgba="0.1 0.1 0.1 1"/>
       </material>
     </visual>

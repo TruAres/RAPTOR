@@ -30,8 +30,8 @@ target_link_libraries(H1lib PUBLIC
 )
 
 add_executable(H1_example 
-    H1SingleStep.cpp)
-    # VisualizationHelper.cpp)
+    # H1SingleStep.cpp)
+    VisualizationHelper.cpp)
 
 target_link_libraries(H1_example PUBLIC
     H1lib
