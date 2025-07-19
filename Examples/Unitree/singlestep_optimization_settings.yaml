@@ -12,7 +12,7 @@ degree: 6
 
 ### Gait behavior settings
   # step height (in the middle of the gait)
-swingfoot_midstep_z_des: 0.5
+swingfoot_midstep_z_des: 0.3
 
   # position with respect to the forward direction of the robot at the beginning
 swingfoot_begin_x_des: -0.0
@@ -41,10 +41,10 @@ tol: 1e-4
 constr_viol_tol: 1e-4
 
   # terminal condition 3: maximum wall time
-max_wall_time: 100.0
+max_wall_time: 5000.0
 
   # terminal condition 4: maximum number of iterations
-max_iter: 200
+max_iter: 1000
 
   # scale the objective function
 obj_scaling_factor: 1e-3
@@ -53,7 +53,7 @@ obj_scaling_factor: 1e-3
 print_level: 5 # 0: no output, 5: detailed output that is usually enough for tuning parameters
 
   # mu_strategy
-mu_strategy: adaptive # adaptive for more aggressive attempts, monotone for more conservative convergence
+mu_strategy: monotone # adaptive for more aggressive attempts, monotone for more conservative convergence
 
   # linear solver (HSL)
 linear_solver: ma57 # ma27, ma57, ma86, ma97, pardiso

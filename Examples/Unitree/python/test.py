@@ -4,11 +4,12 @@ import time
 import numpy as np
 
 # 设置仿真时间步长
-timeStep = 0.1  # 30FPS, 1/30 ≈ 0.033s
+timeStep = 0.12  # 30FPS, 1/30 ≈ 0.033s
 
 # 读取轨迹数据（仅包含 q）
-trajectories = np.loadtxt('../data/full-trajectory-h1-forward.txt')  # 直接读取轨迹数据
-# trajectories = np.loadtxt('../data/1.txt')  # 直接读取轨迹数据
+trajectories = np.loadtxt('../data/test8-log.txt') 
+# trajectories = np.loadtxt('../data/full-trajectory-h1-forward.txt')  # 直接读取轨迹数据
+# trajectories = np.loadtxt('../data/final.txt')  # 直接读取轨迹数据
 num_time_steps, nq = trajectories.shape  
 
 # 连接到 PyBullet
